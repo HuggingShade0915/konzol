@@ -1,0 +1,142 @@
+bool kilep = false;
+while (!kilep)
+{
+    MenuKiiras();
+    Console.WriteLine("Kérem válasszon!");
+    ConsoleKeyInfo bill = Console.ReadKey();
+
+    switch (bill.Key)
+    {
+        case ConsoleKey.F1:
+            FeladatA();
+            Varakozz();
+            break;
+        case ConsoleKey.F2:
+            FeladatB();
+            Varakozz();
+            break;
+        case ConsoleKey.F3:
+            FeladatC();
+            Varakozz();
+            break;
+        case ConsoleKey.F12:
+            RajzolTeglalap();
+            Varakozz();
+            break;
+
+        case ConsoleKey.Escape:
+            Console.WriteLine("Program vége!");
+            kilep = true;
+            break;
+
+        default:
+            Console.WriteLine("\n\nIlyen menüpont nincs!");
+            Varakozz();
+            break;
+    }
+}
+
+void FeladatA()
+{
+    Console.BackgroundColor = ConsoleColor.DarkGray;
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.Clear();
+    Console.Write("Kérem a háromszög méretét! :");
+
+    // TODO Most még nem kell hibavizsgálat!
+    int meret = Convert.ToInt32(Console.ReadLine());
+
+    string sor = "";
+    for (int sorIndex = 0; sorIndex < meret; sorIndex++)
+    {
+        Console.WriteLine(sor += '■');
+    }
+}
+
+void FeladatB()
+{
+    Console.BackgroundColor = ConsoleColor.DarkGray;
+    Console.ForegroundColor = ConsoleColor.Cyan; // Más színt adunk neki
+    Console.Clear();
+    Console.Write("Kérem a háromszög méretét! :");
+
+    int meret = Convert.ToInt32(Console.ReadLine());
+
+    // A ciklus a maximum mérettől indul és csökken 1-ig
+    for (int db = meret; db >= 1; db--)
+    {
+        // Kirajzolunk pontosan 'db' darab blokkot
+        Console.WriteLine(new string('■', db));
+    }
+}
+
+void FeladatC()
+{
+    Console.BackgroundColor = ConsoleColor.DarkGray;
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.Clear();
+    Console.Write("Kérem a háromszög méretét! :");
+    int meret = Convert.ToInt32(Console.ReadLine());
+
+    for (int i = meret; i >= 1; i--)
+    {
+        // 1. A szóközök az elején (ahogy haladunk lefelé, egyre több kell)
+        string szokozok = new string(' ', (meret - i) * 2);
+
+        // 2. A blokkok a szóközök után (ahogy haladunk lefelé, egyre kevesebb kell: 7, 5, 3, 1)
+        string blokkok = "";
+        for (int j = 0; j < 2 * i - 1; j++)
+        {
+            blokkok += "■ ";
+        }
+
+        // Kiírjuk a kettőt egybe fűzve
+        Console.WriteLine(szokozok + blokkok);
+    }
+}
+
+void RajzolTeglalap()
+{
+    Console.BackgroundColor = ConsoleColor.DarkBlue;
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.Clear();
+
+    Console.Write("Kérem a bal felső sarok X koordinátáját: ");
+    int x = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Kérem a bal felső sarok Y koordinátáját: ");
+    int y = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Kérem a téglalap szélességét: ");
+    int szelesseg = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Kérem a téglalap magasságát: ");
+    int magassag = Convert.ToInt32(Console.ReadLine());
+    for (int sorIndex = 0; sorIndex < magassag; sorIndex++)
+    {
+        for (int oszlopIndex = 0; oszlopIndex < szelesseg; oszlopIndex++)
+        {
+            Console.SetCursorPosition(x + oszlopIndex, y + sorIndex);
+            Console.Write('■');
+        }
+    }
+    Console.SetCursorPosition(0, 20);
+}
+
+static void Varakozz()
+{
+    Console.WriteLine("A folytatáshoz nyomjon le egy billentyűt...");
+    while (!Console.KeyAvailable) ;
+    Console.ReadKey();
+}
+
+static void MenuKiiras()
+{
+    Console.BackgroundColor = ConsoleColor.Black;
+    Console.ForegroundColor = ConsoleColor.Gray;
+    Console.Clear();
+    Console.Write("\nMenü\n\n");
+    Console.WriteLine("\t[F1] a) feladat (háromszög)");
+    Console.WriteLine("\t[F2] b) feladat (háromszög lefelelé)");
+    Console.WriteLine("\t[F3] c) feladat (dupla háromszög)");
+    Console.WriteLine(new String('─', 40));
+    Console.WriteLine("\t[F12] EXTRA: Téglalap rajzolása");
+    Console.WriteLine("\n[ESC] Kilépés a programból\n");
+}
